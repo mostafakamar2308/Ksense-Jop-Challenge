@@ -31,18 +31,27 @@ function getPosts(id) {
   fetch("https://jsonplaceholder.typicode.com/posts")
     .then((response) => response.json())
     .then((result) => {
-      let container = document.createElement("section");
-      document.body.appendChild(container);
+      let container = document.querySelector("#container");
+      container.innerHTML = "";
+      container.style.display = "flex";
       let R = result.filter((post) => post.userId === id);
       console.log(R);
       R.forEach((post) => {
+        let postCont = document.createElement("div");
         let title = document.createElement("h3");
         title.textContent = post.title;
-        container.appendChild(title);
+        postCont.appendChild(title);
         let body = document.createElement("p");
         body.textContent = post.body;
-        container.appendChild(body);
+        postCont.appendChild(body);
+        container.appendChild(postCont);
       });
+      let btn = document.createElement("button");
+      btn.textContent = "Close Posts";
+      btn.addEventListener("click", function () {
+        container.style.display = "none";
+      });
+      container.appendChild(btn);
     });
 }
 function makeContainer() {}
